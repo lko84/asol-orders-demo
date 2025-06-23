@@ -1,4 +1,4 @@
-package sk.lko84;
+package sk.lko84.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,38 +12,27 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
+    @Id
+    @EqualsAndHashCode.Include
+    @ToString.Include
+    @Column(name = "order_id", nullable = false, updatable = false, unique = true)
+    private String orderId;
 
     @ManyToOne(optional = false)
+    @ToString.Include
     @JoinColumn(name = "user_id")
     private User customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
+    @ToString.Include
     @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Embeddable
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    public class OrderId implements Serializable {
-
-        @Column(name = "id", nullable = false, updatable = false, unique = true)
-        private String orderId;
-
-        protected OrderId(){
-
-        }
-
-
-
-
-    }
+    private LocalDateTime orderDate;
 
 }

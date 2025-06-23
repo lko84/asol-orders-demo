@@ -2,6 +2,7 @@ package sk.lko84.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sk.lko84.UserRepository;
 import sk.lko84.dto.UserDto;
 import sk.lko84.entity.User;
 import sk.lko84.mapping.UserMapper;

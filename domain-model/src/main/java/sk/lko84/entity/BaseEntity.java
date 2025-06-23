@@ -1,16 +1,18 @@
-package sk.lko84;
+package sk.lko84.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Version;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Auditable;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @MappedSuperclass
 @Getter
@@ -31,7 +33,7 @@ public abstract class BaseEntity {
     private String createdBy;
 
     @LastModifiedBy
-    @Column(name = " ", nullable = false)
+    @Column(name = "modified_by", nullable = false)
     private String updatedBy;
 
     @Version

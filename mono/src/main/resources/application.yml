@@ -14,9 +14,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  profiles:
+    active: development
 
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+jwt:
+  secret: "4NjYWjKXKbUIwYCKGGHdLud1obggEB2P7nVE/S6XLOQiMbGxSOXNkO+2z/RzXHUC"

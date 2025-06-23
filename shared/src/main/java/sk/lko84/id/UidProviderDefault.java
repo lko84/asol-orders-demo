@@ -4,15 +4,12 @@ import de.huxhorn.sulky.ulid.ULID;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UidGenerator {
+public class UidProviderDefault implements UidProvider {
 
-    private final ULID ulid = new ULID();
+    private static final ULID ulid = new ULID();
 
     public String generate() {
         return ulid.nextULID();
     }
 
-    public String generate(String prefix) {
-        return prefix + "_" + ulid.nextULID();
-    }
 }

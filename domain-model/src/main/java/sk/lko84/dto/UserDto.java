@@ -1,4 +1,4 @@
-package sk.lko84.mapping;
+package sk.lko84.dto;
 
 import lombok.*;
 
@@ -10,7 +10,8 @@ import lombok.*;
 @ToString
 public class UserDto {
     private String userId;
-    private String username;
-
-
+    private String fullName;
+    private String email;
+    private String phone;
+    private boolean active;
 }

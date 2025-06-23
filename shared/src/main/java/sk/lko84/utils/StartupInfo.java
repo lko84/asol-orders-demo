@@ -1,8 +1,6 @@
 package sk.lko84.utils;
 
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
-public class StartupDocumentationLogger {
+public class StartupInfo {
 
     @Value("${server.port:8080}")
     private int serverPort;
@@ -25,7 +23,7 @@ public class StartupDocumentationLogger {
     private String profiles;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void logDocsUrl() {
+    public void doLogStartupInfo() {
         String baseUrl = "http://localhost:" + serverPort;
 
         log.info("\n📚 API Docs available at:");

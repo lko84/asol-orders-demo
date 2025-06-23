@@ -1,4 +1,4 @@
-package sk.lko84;
+package sk.lko84.audit;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.data.domain.AuditorAware;

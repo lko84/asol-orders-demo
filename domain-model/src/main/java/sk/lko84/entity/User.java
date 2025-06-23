@@ -1,4 +1,4 @@
-package sk.lko84;
+package sk.lko84.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,33 +7,35 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    @Id
+    @EqualsAndHashCode.Include
+    @ToString.Include
+    @Column(name = "user_id", nullable = false, updatable = false, unique = true)
+    private String userId;
+
+    @ToString.Include
+    @Column(nullable = false)
+    private String fullName;
+
     @ToString.Include
     @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
+    private String email;
 
     @ToString.Include
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+    @Column
+    private String phone;
 
-    public enum Role {
-        ADMIN,
-        CUSTOMER
-    }
+    @ToString.Include
+    @Column
+    private boolean active = true;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id != null && id.equals(user.id);
-    }
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Credentials credentials;
+
 }

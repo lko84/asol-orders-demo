@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sk.lko84.CredentialRepository;
-import sk.lko84.UserRepository;
 import sk.lko84.entity.Credentials;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 credentials.getUsername(),
                 credentials.getPasswordHash(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+                credentials.getRoles().stream().map(Enum::name).map(SimpleGrantedAuthority::new).toList()
         );
     }
 }
