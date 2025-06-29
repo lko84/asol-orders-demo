@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,24 +18,26 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import sk.lko84.CredentialRepository;
 import sk.lko84.service.DefaultUserDetailsService;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Log4j2
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final DefaultUserDetailsService userDetailsService;
     private final CredentialRepository credentialRepository;
-
-    @Value("${jwt.secret:secret}")
-    private String secretKey;
+    private final SecretKey jwtSecretKey;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+        log.info("Authorization Header: {}", request.getHeader("Authorization"));
 
         String header = request.getHeader("Authorization");
 
@@ -59,9 +62,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
     private List<SimpleGrantedAuthority> getAuthoritiesFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecretKey) // use injected key
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
         List<String> roles = claims.get("roles", List.class);
-        return roles.stream().map(SimpleGrantedAuthority::new).toList();
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 }

@@ -41,6 +41,6 @@ public class AuthController {
         List<String> roles = credentials.getRoles().stream().map(Enum::name).toList();
 
         String token = jwtUtil.generateToken(authRequest.getUsername(), roles);
-        return ResponseEntity.ok(new AuthResponse(token));
+        return ResponseEntity.ok(new AuthResponse(token, credentials.getUserId(), credentials.getUsername(), credentials.getRoles().stream().map(Enum::name).toList()));
     }
 }
