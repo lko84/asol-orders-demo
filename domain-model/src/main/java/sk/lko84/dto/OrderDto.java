@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import java.util.List;
 @ToString
 public class OrderDto {
     private String orderId;
-    private String customerId;
+    private UserDto customer;
     private LocalDateTime orderDate;
     private List<OrderItemDto> items;
 }

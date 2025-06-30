@@ -20,7 +20,7 @@ A modular Java/Spring Boot REST API for managing users and orders. Built as a sh
 - Monolithic runnable JAR
 - Preliminary Spring Security integration, support for auditing
 - JWT authentication
-- Basic datasets
+- Basic datasets for users and orders
 
 ## Planned Features
 
@@ -29,6 +29,7 @@ A modular Java/Spring Boot REST API for managing users and orders. Built as a sh
 - User scoring feature
 - Unit & integration test coverage
 - Full containirezation and orchestration
+- Fix dataset duping
 
 ## Running the Project
 

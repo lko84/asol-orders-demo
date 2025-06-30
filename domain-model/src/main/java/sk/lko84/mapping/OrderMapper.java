@@ -16,7 +16,7 @@ public class OrderMapper {
 
         return new OrderDto(
                 entity.getOrderId(),
-                entity.getCustomer().getUserId(),
+                UserMapper.toDto(entity.getCustomer()),
                 entity.getOrderDate(),
                 items
         );
